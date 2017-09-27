@@ -16,7 +16,7 @@
     vm.samDesign = {}
     vm.samResult = {}
     vm.samAttributes = {}
-    vm.samGraphic = {}
+    vm.samChart = {}
 
     vm.getSamDetail = function() {
       samService.getDetail(vm.samDetail.samId, 
@@ -107,38 +107,45 @@
       return data
     }
 
+    vm.buildRadarChart = function(data) {
+
+    }
+
     vm.buildGraphicData = function(data) {
-      var gLabels = new Array()
-      var gSeries = new Array()
-      var gData = new Array()
+      var response =  {
+        labels : new Array(),
+        series : new Array(),
+        data : new Array()
+      }
+
+      if (data.length < 3) {
+        response.bars = true
+      } else {
+        response.radar = true
+      }
 
       for (var i = 0; i < data.length; i++) {
         var partialResult = data[i]
-        gLabels.push(partialResult.attributeName)
+        response.labels.push(partialResult.attributeName)
 
         for (var j = 0; j < partialResult.summaries.length; j++) {
           var summary = partialResult.summaries[j]
 
-          if (gData.length <= j) {
-            gData.push(new Array())
-            gSeries.push(summary.sampleName)
+          if (response.data.length <= j) {
+            response.data.push(new Array())
+            response.series.push(summary.sampleName)
           }
 
-          gData[j].push(summary.average)
+          response.data[j].push(summary.average)
         }
       }
-
-      return {
-        labels : gLabels,
-        series : gSeries,
-        data : gData
-      }
       
+      return response     
     }
 
     vm.processResult = function(data) {
       vm.samResult=vm.roundResult(data)
-      vm.samGraphic = vm.buildGraphicData(vm.samResult.partialResults)
+      vm.samChart = vm.buildGraphicData(vm.samResult.partialResults)
     }
 
     vm.getSamResult = function() {
