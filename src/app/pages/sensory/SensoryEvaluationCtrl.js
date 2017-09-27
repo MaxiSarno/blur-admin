@@ -41,7 +41,7 @@
     }
 
     vm.getSamDesignCsv = function() {
-      return samService.getDesignCsvUrl(vm.samDetail.samId)
+      return samService.getDesignCsvUrl(vm.samDetail.samId, vm.samDesign.judges, vm.samDesign.samples)
     }
 
     vm.getSamAttributesTemplate = function() {
@@ -105,10 +105,6 @@
         }
       }
       return data
-    }
-
-    vm.buildRadarChart = function(data) {
-
     }
 
     vm.buildGraphicData = function(data) {

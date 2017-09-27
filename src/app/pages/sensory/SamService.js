@@ -381,8 +381,8 @@
       thiz.http(saveDesignUrl, 'POST', success, error)
     }
 
-    var getDesignCsvUrl = function(samId) {
-      return evaluationUrl+'/'+samId+'/design/export?type=csv'
+    var getDesignCsvUrl = function(samId, judges, samples) {
+      return evaluationUrl+'/'+samId+'/design/export?type=csv&judges='+judges+'&samples='+samples
     }
 
     var getAttributesCsvUrl = function(samId, attributes, success, error) {
