@@ -27,7 +27,8 @@
         })
     }
 
-    var mock = true
+    var mock = false
+    /*RADAR*/
     /*var mockResult = {
         "samId": 3,
         "alpha": 0.1,
@@ -242,6 +243,7 @@
             }
         ]
     }*/
+    /*BARS*/
     var mockResult = {
         "samId": 3,
         "alpha": 0.1,
@@ -350,59 +352,6 @@
                 "fCritValue": 0,
                 "pValue": 1.2693179840539415e-12
             }
-            /*,
-            {
-                "id": 0,
-                "attributeName": "intensidad del jabon",
-                "areDifferent": true,
-                "winner": "producto 3",
-                "distribution": "ANOVA",
-                "summaries": [
-                    {
-                        "id": 0,
-                        "sampleName": "producto 1",
-                        "count": 35,
-                        "sum": 107,
-                        "min": 2,
-                        "max": 4,
-                        "average": 6.057142857142857,
-                        "variance": 0.173109243697479
-                    },
-                    {
-                        "id": 0,
-                        "sampleName": "producto 2",
-                        "count": 35,
-                        "sum": 103,
-                        "min": 1,
-                        "max": 5,
-                        "average": 5.9428571428571426,
-                        "variance": 0.9378151260504201
-                    },
-                    {
-                        "id": 0,
-                        "sampleName": "producto 3",
-                        "count": 35,
-                        "sum": 219,
-                        "min": 1,
-                        "max": 10,
-                        "average": 2.257142857142856,
-                        "variance": 9.137815126050418
-                    },
-                    {
-                        "id": 0,
-                        "sampleName": "producto 4",
-                        "count": 35,
-                        "sum": 219,
-                        "min": 1,
-                        "max": 10,
-                        "average": 4,
-                        "variance": 9.137815126050418
-                    }
-                ],
-                "fValue": 36.263693014102984,
-                "fCritValue": 0,
-                "pValue": 1.2693179840539415e-12
-            }*/
         ]
     }
 
