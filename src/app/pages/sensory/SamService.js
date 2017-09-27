@@ -23,7 +23,9 @@
           success(data)
         })
         .error(function(data) {
-          error(data)
+          if (error) {
+            error(data)
+          }
         })
     }
 
