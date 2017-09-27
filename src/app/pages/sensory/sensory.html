@@ -102,7 +102,7 @@
 
                                  
                                 <div class="col-md-6">
-                                    <form ng-submit="vm.attributesUploadB()"  id="attributesUploadForm" method="POST" enctype="multipart/form-data" novalidate>
+                                    <form ng-submit="vm.attributesUpload()"  id="attributesUploadForm" method="POST" enctype="multipart/form-data" novalidate>
                                         <div class="form-group" ng-class="{'has-error': vm.samAttributesForm.archivo.$invalid && (vm.samAttributesForm.archivo.$dirty || vm.samAttributesForm.$submitted)}">
                                             <label for="archivo1">Archivo</label>
                                             <input type="file" class="form-control" id="archivo1" name="archivo" placeholder="Archivo csv con los datos recolectados" ng-model="vm.samAttributes.archivo">

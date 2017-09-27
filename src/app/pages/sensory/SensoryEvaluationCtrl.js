@@ -50,7 +50,26 @@
 
 
     vm.attributesUpload = function() {
-      var req = {
+      var file = vm.samAttributes.archivo
+      var uploadUrl =  'http://localhost:8180/sam/evaluation/'+vm.samDetail.samId+'/attributes/fileupload'
+
+      var fd = new FormData();
+        fd.append('file', file);
+        $http.post(uploadUrl, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .success(function(){
+          console.log("ok")
+        })
+        .error(function(){
+          console.log("error")
+        });
+
+
+
+
+      /*var req = {
         method: 'POST',
         url: 'http://localhost:8180/sam/evaluation/'+vm.samDetail.samId+'/attributes/fileupload',
         headers: {
@@ -59,7 +78,7 @@
         data: { test: 'test' }
       }
 
-      $http(req).then(console.log('success'), console.log('error'));
+      $http(req).then(console.log('success'), console.log('error'));*/
     }
 
     vm.attributesUploadB = function() {
@@ -69,7 +88,6 @@
       var myForm = document.getElementById('attributesUploadForm')
       console.log(myForm)
       myForm.action = uploadUrl
-      console.log("ok")
     }
 
     vm.round = function(num, places) {
