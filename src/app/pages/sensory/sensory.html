@@ -90,8 +90,8 @@
                                             <span class="help-block error-block basic-block">Required</span>
                                         </div>
                                         <a target="_blank" ng-href="{{vm.getSamAttributesTemplate()}}">
-                                            <button type="button" class="btn btn-success btn-with-icon">
-                                                <i class="ion-ios-download"></i>
+                                            <button ng-disabled="!vm.samAttributes.names" type="button" class="btn btn-success btn-with-icon">
+                                                <i class="ion-android-download"></i>
                                                 Descargar plantilla
                                             </button> 
                                         </a>
