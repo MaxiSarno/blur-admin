@@ -69,7 +69,7 @@
 
                                 <div class="col-md-12 align-right">
                                     <a target="_blank" ng-href="{{vm.getSamDesignCsv()}}">
-                                        <button type="button" class="btn btn-success btn-with-icon">
+                                        <button ng-disabled="!vm.samDesign.samples || !vm.samDesign.judges" type="button" class="btn btn-success btn-with-icon">
                                             <i class="ion-android-download"></i>
                                             Descargar CSV
                                         </button> 
