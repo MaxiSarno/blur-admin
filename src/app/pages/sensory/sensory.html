@@ -40,7 +40,7 @@
                                 </div>
 
                                 <div class="col-md-12 align-right">
-                                    <button type="submit" class="btn btn-success btn-with-icon">
+                                    <button ng-disabled="vm.samDetail.samId" type="submit" class="btn btn-success btn-with-icon">
                                         <i class="ion-android-download"></i>
                                         Guardar
                                     </button>
@@ -139,27 +139,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div ng-controller="SensoryEvaluationCtrl">
-
-                                    <!-- <div ng-if="vm.samChart.radar" ba-panel>
-                                        <div class="chartjs-canvas-holder">
-                                            <canvas id="radar" class="chart chart-radar" 
-                                                chart-data="vm.samChart.data"
-                                                chart-series="vm.samChart.series" 
-                                                chart-labels="vm.samChart.labels" chart-click="changeData">
-                                            </canvas>
-                                        </div>
-                                    </div>
-
-                                    <div ng-if="vm.samChart.bars" ba-panel>
-                                        <div class="chartjs-canvas-holder">
-                                            <canvas id="bar" class="chart chart-bar"
-                                                chart-data="vm.samChart.data"
-                                                chart-series="vm.samChart.series" 
-                                                chart-labels="vm.samChart.labels" chart-click="changeData" chart-update="updateC">
-                                            </canvas>
-                                        </div>
-                                    </div> -->
-
                                     <div ba-panel>
                                         <div ng-if="vm.samChart.radar" class="chartjs-canvas-holder">
                                             <canvas id="radar" class="chart chart-radar" 
@@ -177,7 +156,6 @@
                                             </canvas>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-6">
