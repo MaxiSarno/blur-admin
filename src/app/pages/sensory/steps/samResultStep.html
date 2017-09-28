@@ -1,0 +1,56 @@
+<ba-wizard-step title="Resultados">
+    <form name="vm.samResultForm" ng-submit="vm.calcSamResult()" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': vm.samResultForm.alpha.$invalid && (vm.samResultForm.alpha.$dirty || vm.samResultForm.$submitted)}">
+                    <label for="alpha1">Alfa muestral (error)</label>
+                    <input type="number" class="form-control" id="alpha1" name="alpha" placeholder="Alfa" ng-model="vm.samResult.alpha">
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>                                    
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success btn-with-icon align-right">
+                    <i class="ion-android-download"></i>
+                    Calcular
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div ng-controller="SensoryEvaluationCtrl">
+                <div ba-panel>
+                    <div ng-if="vm.samChart.radar" class="chartjs-canvas-holder">
+                        <canvas id="radar" class="chart chart-radar" 
+                            chart-data="vm.samChart.data"
+                            chart-series="vm.samChart.series" 
+                            chart-labels="vm.samChart.labels" chart-click="changeData">
+                        </canvas>
+                    </div>
+
+                    <div ng-if="vm.samChart.bars" class="chartjs-canvas-holder">
+                        <canvas id="bar" class="chart chart-bar"
+                            chart-data="vm.samChart.data"
+                            chart-series="vm.samChart.series" 
+                            chart-labels="vm.samChart.labels" chart-click="changeData" chart-update="updateC">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <uib-accordion>
+                <uib-accordion-group ng-repeat="partial in vm.samResult.partialResults" heading="{{partial.attributeName}}: {{partial.winner}}" panel-class="bootstrap-panel accordion-panel panel-default">
+                    Distribución utilizada: {{partial.distribution}}
+                    <!-- <div class="col-lg-6 col-md-12"> -->
+                    <!-- <div ba-panel ba-panel-class="with-scroll table-panel"> -->
+                    <div include-with-scope="app/pages/sensory/widgets/stripedRows.html"></div>
+                    </div>
+                </uib-accordion-group>
+                
+            </uib-accordion>
+        </div>
+    </div>
+</ba-wizard-step>

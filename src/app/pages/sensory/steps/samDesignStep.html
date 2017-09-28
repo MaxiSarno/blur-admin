@@ -1,0 +1,31 @@
+<ba-wizard-step title="Diseño" form="vm.samDesignForm">
+    <form name="vm.samDesignForm" ng-submit="vm.samDesignSave()" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': vm.samDesignForm.judges.$invalid && (vm.samDesignForm.judges.$dirty || vm.samDesignForm.$submitted)}">
+                    <label for="judges1">Panelistas</label>
+                    <input type="number" class="form-control" id="judges1" name="judges" placeholder="Cantidad de Panelistas" ng-model="vm.samDesign.judges">
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>                                    
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{'has-error': vm.samDesignForm.samples.$invalid && (vm.samDesignForm.samples.$dirty || vm.samDesignForm.$submitted)}">
+                    <label for="samples1">Muestras</label>
+                    <input type="text" class="form-control" id="samples1" name="samples" placeholder="Nombre de las muestras separados por comas" ng-model="vm.samDesign.samples">
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 align-right">
+                <a target="_blank" ng-href="{{vm.getSamDesignCsv()}}">
+                    <button ng-disabled="!vm.samDesign.samples || !vm.samDesign.judges" type="button" class="btn btn-success btn-with-icon">
+                        <i class="ion-android-download"></i>
+                        Descargar CSV
+                    </button> 
+                </a>
+            </div>
+            
+        </div>
+    </form>
+</ba-wizard-step>

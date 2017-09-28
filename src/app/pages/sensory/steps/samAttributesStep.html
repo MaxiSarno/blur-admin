@@ -1,0 +1,35 @@
+<ba-wizard-step title="Atributos"  form="vm.samAttributesForm">
+    <!-- <form name="vm.samAttributesForm" ng-submit="vm.attributesUpload()" novalidate> -->
+        <div class="row">
+            <div class="col-md-6">
+                <form name="vm.samAttributesForm" novalidate>
+                    <div class="form-group" ng-class="{'has-error': vm.samAttributesForm.names.$invalid && (vm.samAttributesForm.names.$dirty || vm.samAttributesForm.$submitted)}">
+                        <label for="attributes1">Atributos</label>
+                        <input type="text" class="form-control" id="attributes1" name="names" placeholder="Nombre de los atributos separados por comas" ng-model="vm.samAttributes.names">
+                        <span class="help-block error-block basic-block">Required</span>
+                    </div>
+                    <a target="_blank" ng-href="{{vm.getSamAttributesTemplate()}}">
+                        <button ng-disabled="!vm.samAttributes.names" type="button" class="btn btn-success btn-with-icon">
+                            <i class="ion-android-download"></i>
+                            Descargar plantilla
+                        </button> 
+                    </a>
+                </form>
+            </div>
+
+             
+            <div class="col-md-6">
+                <form ng-submit="vm.attributesUpload()"  id="attributesUploadForm" method="POST" enctype="multipart/form-data" novalidate>
+                    <div class="form-group" ng-class="{'has-error': vm.samAttributesForm.archivo.$invalid && (vm.samAttributesForm.archivo.$dirty || vm.samAttributesForm.$submitted)}">
+                        <label for="archivo1">Archivo</label>
+                        <input type="file" class="form-control" id="archivo1" name="archivo" placeholder="Archivo csv con los datos recolectados" ng-model="vm.samAttributes.archivo">
+                        <span class="help-block error-block basic-block">Required</span>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-with-icon align-right">
+                        <i class="ion-android-upload"></i>
+                        Subir datos
+                    </button>
+                </form>
+            </div>
+        </div>
+</ba-wizard-step>

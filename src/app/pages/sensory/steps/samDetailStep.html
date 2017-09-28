@@ -1,0 +1,44 @@
+<ba-wizard-step title="Detalles" form="vm.samDetailForm">
+    <form name="vm.samDetailForm" ng-submit="vm.samDetailSave()" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-feedback"
+                     ng-class="{'has-error': vm.samDetailForm.name.$invalid && (vm.samDetailForm.name.$dirty || vm.samDetailForm.$submitted)}">
+                    <label for="samName1">Nombre</label>
+                    <input type="text" class="form-control" id="samName1" name="name" placeholder="Nombre" ng-model="vm.samDetail.name" required>
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': vm.samDetailForm.samId.$invalid && (vm.samDetailForm.samId.$dirty || vm.samDetailForm.$submitted)}">
+                    <label for="samId1">ID</label>
+                    <input type="text" class="form-control" id="samId1" name="samId" placeholder="ID" ng-model="vm.samDetail.samId" disabled>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" ng-class="{'has-error': vm.samDetailForm.type.$invalid && (vm.samDetailForm.type.$dirty || vm.samDetailForm.$submitted)}">
+                    <label for="samType1">Tipo</label>
+                    <select class="form-control" title="Seleccione el Tipo" ng-model="vm.samDetail.type" required selectpicker>
+                        <option selected>hedonica</option>
+                        <option>consumidor</option>
+                        <option>descriptiva</option>
+                    </select>
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': vm.samDetailForm.scale.$invalid && (vm.samDetailForm.scale.$dirty || vm.samDetailForm.$submitted)}">
+                    <label for="samScale1">Escala</label>
+                    <select class="form-control" title="Seleccione la Escala" ng-model="vm.samDetail.scale" required selectpicker>
+                        <option selected>cinco</option>
+                        <option>nueve</option>
+                    </select>
+                    <span class="help-block error-block basic-block">Required</span>
+                </div>
+            </div>
+
+            <div class="col-md-12 align-right">
+                <button ng-disabled="vm.samDetail.samId" type="submit" class="btn btn-success btn-with-icon">
+                    <i class="ion-android-download"></i>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</ba-wizard-step>
