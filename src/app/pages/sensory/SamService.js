@@ -411,7 +411,6 @@
         return currentSamId
       },
       setCurrentSamId: function(value) {
-        console.log('seteando el csid en:'+value)
         currentSamId = value
       },
       getList : getList,

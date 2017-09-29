@@ -1,6 +1,4 @@
-
 <div class="horizontal-scroll">
-  <!-- <div class="form-group select-page-size-wrap "> -->
   <div class="form-group ">
     <div class="col-md-6">
       <label>Rows on page
@@ -13,11 +11,10 @@
       <a href="#/sensory/evaluation"><button type="button" class="btn btn-primary">Nueva Evaluacion</button></a>
     </div>
   </div>
- <!--  <div class="button-wrapper"><button type="button" class="btn btn-success">Nueva Evaluacion</button></div> -->
-  <table class="table" st-table="smartTableData">
+  <table class="table" st-table="vm.smartTableData">
     <thead>
     <tr class="sortable ">
-      <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+      <th class="table-id" st-sort="samId" st-sort-default="true">#</th>
       <th st-sort="name">Nombre</th>
       <th st-sort="type">Tipo</th>
       <th st-sort="scale">Escala</th>
