@@ -48,18 +48,21 @@
       return samService.getAttributesCsvUrl(vm.samDetail.samId, vm.samAttributes.names)
     }
 
-    vm.attributesUploadS = function() {
+    vm.attributesUpload = function() {
       var uploadUrl = "http://localhost:8180/sam/evaluation/" + vm.samDetail.samId + "/attributes/fileupload"
       
       var formData = new FormData();
       formData.append("file",file.files[0]);
-      $http({
+
+      var req = {
         method: 'POST',
         url: uploadUrl,
         transformRequest: angular.identity,
         headers: { 'Content-Type': undefined},
         data: formData 
-      }).success(function(data, status) {
+      }
+
+      $http(req).success(function(data) {
         console.log("ok")                 
         /*toaster.pop(
             'success',
@@ -67,8 +70,8 @@
             'Los nuevos rangos se cargaron de manera exitosa'
         );
         $route.reload();*/
-      }).error(function(data, status) {
-        console.log("error")        
+      }).error(function(data) {
+        console.log("error!!!")        
         /*toaster.pop(
             'error',
             null,
