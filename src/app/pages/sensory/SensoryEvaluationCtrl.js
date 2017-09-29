@@ -48,46 +48,34 @@
       return samService.getAttributesCsvUrl(vm.samDetail.samId, vm.samAttributes.names)
     }
 
-
-    vm.attributesUpload = function() {
-      var file = vm.samAttributes.archivo
-      var uploadUrl =  'http://localhost:8180/sam/evaluation/'+vm.samDetail.samId+'/attributes/fileupload'
-
-      var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        })
-        .success(function(){
-          console.log("ok")
-        })
-        .error(function(){
-          console.log("error")
-        });
-
-
-
-
-      /*var req = {
-        method: 'POST',
-        url: 'http://localhost:8180/sam/evaluation/'+vm.samDetail.samId+'/attributes/fileupload',
-        headers: {
-          'Content-Type': multipart/form-data
-        },
-        data: { test: 'test' }
-      }
-
-      $http(req).then(console.log('success'), console.log('error'));*/
-    }
-
-    vm.attributesUploadB = function() {
-      console.log('upload')
-
+    vm.attributesUploadS = function() {
       var uploadUrl = "http://localhost:8180/sam/evaluation/" + vm.samDetail.samId + "/attributes/fileupload"
-      var myForm = document.getElementById('attributesUploadForm')
-      console.log(myForm)
-      myForm.action = uploadUrl
+      
+      var formData = new FormData();
+      formData.append("file",file.files[0]);
+      $http({
+        method: 'POST',
+        url: uploadUrl,
+        transformRequest: angular.identity,
+        headers: { 'Content-Type': undefined},
+        data: formData 
+      }).success(function(data, status) {
+        console.log("ok")                 
+        /*toaster.pop(
+            'success',
+            null,
+            'Los nuevos rangos se cargaron de manera exitosa'
+        );
+        $route.reload();*/
+      }).error(function(data, status) {
+        console.log("error")        
+        /*toaster.pop(
+            'error',
+            null,
+            'Se produjo un error durante la carga del archivo. Por favor verifique la completitud de cada uno de los datos.'
+        );
+        $route.reload();*/
+      });
     }
 
     vm.round = function(num, places) {
