@@ -9,6 +9,7 @@
     'ui.router',
     
     'BlurAdmin.pages.sensory', 
+    'BlurAdmin.pages.users', 
 
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.profile'
