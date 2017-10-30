@@ -21,7 +21,7 @@
     </td>
     <td class="select-td">
         <span editable-text="user.password" e-name="password" e-form="rowform" e-required>
-          ***
+          *****
         </span>
     </td>
     <td class="select-td">
@@ -46,8 +46,11 @@
         </button>
       </form>
       <div class="buttons" ng-show="!rowform.$visible">
-        <button class="btn btn-primary editable-table-button btn-xs" ng-click="rowform.$show()">Editar</button>
-        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeUser($index)">Borrar</button>
+        <!-- <button class="btn btn-primary editable-table-button btn-xs" ng-click="rowform.$show()">Editar</button>
+        <button class="btn btn-danger editable-table-button btn-xs" ng-click="removeUser($index)">Borrar</button> -->
+
+        <button title="Editar" class="btn btn-primary editable-table-button btn-xs btn-icon" ng-click="rowform.$show()"><i class="ion-edit"></i></button>
+        <button title="Borrar" class="btn btn-danger editable-table-button btn-xs btn-icon" ng-click="removeUser($index)"><i class="ion-trash-a"></i></button>
       </div>
     </td>
   </tr>
