@@ -11,6 +11,13 @@
   /** @ngInject */
   function UsersCtrl($scope, $http, samService) {
 
+  	samService.getUsers(
+  		function(data){vm.smartTableData = data}, 
+  		function(data){console.log(data)}
+  		)
+
+  	var vm = this
+
   	$scope.roles = [ 'USER', 'ADMIN'];
 
     $scope.users = [
@@ -38,14 +45,23 @@
         id: $scope.users.length+1,
         username: null,
         password: null,
+        description : null,
         role: $scope.roles[0]
       };
+      vm.currentUser = $scope.inserted
       $scope.users.push($scope.inserted);
     };
 
-    $scope.saveUser = function(rowform) {
+    $scope.saveUser = function(user) {
       console.log("saveUser")
-      console.log(rowform)
+      console.log(user)
+      console.log('$scope.inserted:'+$scope.inserted.username)
+      console.log('vm.currentUser'+vm.currentUser)
+
+      samService.saveUser(user, 
+      	function(data) {console.log('usuario creado')},
+      	function(data) {console.log('error al crear usuario')})
+      /*console.log($scope.users[$scope.users.length-1])*/
       /*$scope.inserted = {
         id: $scope.users.length+1,
         name: '',

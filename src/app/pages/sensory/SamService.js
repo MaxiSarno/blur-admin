@@ -101,6 +101,11 @@
 
   /** @ngInject */
   function samService($sce, $http, Base64, $rootScope) {
+
+    var evaluationUrl = 'http://localhost:8180/sam/evaluation'
+    var userUrl = 'http://localhost:8180/sam/user'
+    var loginUrl = 'http://localhost:8180/sam/login'
+
     var thiz = this
     var currentSamId = 0
 
@@ -482,8 +487,6 @@
         ]
     }
 
-    var evaluationUrl = 'http://localhost:8180/sam/evaluation'
-
     var getList = function(success, error) {
       thiz.http(evaluationUrl, 'GET', success, error)
     }
@@ -526,8 +529,31 @@
     }
 
     var calcResult = function(samId, alpha, success, error) {
-      var getResultUrl = evaluationUrl+'/'+samId+'/results?alpha='+alpha
-      thiz.http(getResultUrl, 'POST', success, error)
+      var calcResultUrl = evaluationUrl+'/'+samId+'/results?alpha='+alpha
+      thiz.http(calcResultUrl, 'POST', success, error)
+    }
+
+    var getUsers = function(success, error) {
+      var getUsers = userUrl
+      thiz.http(getUsers, 'GET', success, error)
+    }
+
+    var saveUser = function(user, success, error) {
+      var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
+      var saveUser = userUrl + params
+      thiz.http(saveUser, 'POST', success, error)
+    }
+
+    var updateUser = function(user, success, error) {
+      var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
+      var updateUser = userUrl + params
+      thiz.http(updateUser, 'PUT', success, error)
+    }
+
+    var deleteUser = function(username, success, error) {
+      var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
+      var deleteUser = userUrl + params
+      thiz.http(deleteUser, 'DELETE', success, error)
     }
 
 
@@ -541,12 +567,20 @@
       getList : getList,
       getDetail : getDetail,
       saveDetail : saveDetail,
+
       getDesignCsvUrl: getDesignCsvUrl,
       getDesign  : getDesign,
       saveDesign  : saveDesign,
+
       getAttributesCsvUrl : getAttributesCsvUrl,
+
       getResult : getResult,
-      calcResult : calcResult
+      calcResult : calcResult,
+
+      getUsers : getUsers,
+      saveUser : saveUser,
+      updateUser : updateUser,
+      deleteUser : deleteUser
     }
 
   }
