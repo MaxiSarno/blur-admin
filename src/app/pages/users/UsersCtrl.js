@@ -50,24 +50,47 @@
     }
 
     vm.saveUser = function() {
-      console.log("add or edit user")
+      var success = function() {
+        vm.currentUser.show = false
+        vm.getUserList()
+      }
+
+      var error = function(data) {
+        console.log('error')
+        console.log(data)
+      }
+
       if (vm.currentUser.new) {
-        samService.addUser(vm.currentUser)
+        samService.addUser(vm.currentUser, success, error)
       } else {
-        samService.updateUser(vm.currentUser)
+        samService.updateUser(vm.currentUser, success, error)
       }
     }
 
     vm.deleteUser = function(user) {
-      console.log(user.username)
-      samService.deleteUser(user.username)
+      var success = function() {
+        vm.getUserList()
+      }
+
+      var error = function(data) {
+        console.log('error')
+        console.log(data)
+      }
+
+      samService.deleteUser(user.username, success, error)
+      //$state.reload() (injectar $state a UserCtrl) rompe la lista
+      //$window.location.reload() (injectar $window a UserCtrl) recarga toooodo, tarda mucho
     }
 
     // INIT
-    samService.getUsers(
-      function(data){vm.smartTableData = data}, 
-      function(data){console.log(data)}
+    vm.getUserList = function() {
+      samService.getUsers(
+        function(data){vm.smartTableData = data}, 
+        function(data){console.log(data)}
       )
+    }
+
+    vm.getUserList()
 
   } 
 
