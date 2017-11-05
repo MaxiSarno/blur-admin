@@ -10,15 +10,18 @@
 
   /** @ngInject */
   function UsersCtrl($scope, $http, samService) {
+    var vm = this;
 
-  	samService.getUsers(
-  		function(data){vm.smartTableData = data}, 
-  		function(data){console.log(data)}
-  		)
+    vm.roles = [ 'USER', 'ADMIN']
 
-  	var vm = this
-
-  	$scope.roles = [ 'USER', 'ADMIN'];
+    //vars
+    vm.editUser = {
+      show : false,
+      username: '',
+      password : '',
+      description : '',
+      role : vm.roles[0]
+    }
 
     $scope.users = [
       {
@@ -34,6 +37,18 @@
       	role: 'USER'
       }
     ];
+
+    vm.newUser = function() {
+      var showNow = !vm.editUser.show
+      
+      vm.editUser = {
+        show : showNow,
+        username: '',
+        password : '',
+        description : '',
+        role : vm.roles[0]
+      }
+    }
 
     $scope.removeUser = function(index) {
       $scope.users.splice(index, 1);
@@ -70,6 +85,12 @@
       };
       $scope.users.push($scope.inserted);*/
     };
+
+    // INIT
+    samService.getUsers(
+      function(data){vm.smartTableData = data}, 
+      function(data){console.log(data)}
+      )
 
   } 
 
