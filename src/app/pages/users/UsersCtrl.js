@@ -25,10 +25,10 @@
     }
 
     vm.newUser = function() {
-      var showNow = !vm.currentUser.show
+      var doShow = !vm.currentUser.show
       
       vm.currentUser = {
-        currentUser : showNow,
+        show : doShow,
         new : true,
         username: '',
         password : '',
@@ -38,6 +38,7 @@
     }
 
     vm.editUser = function(user) {
+      console.log(user)
       vm.currentUser = {
         show : true,
         new : false,
