@@ -551,8 +551,7 @@
     }
 
     var deleteUser = function(username, success, error) {
-      var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
-      var deleteUser = userUrl + params
+      var deleteUser = userUrl + '?username=' + username
       thiz.http(deleteUser, 'DELETE', success, error)
     }
 

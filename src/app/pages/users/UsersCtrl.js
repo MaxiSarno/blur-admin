@@ -54,11 +54,12 @@
       if (vm.currentUser.new) {
         samService.addUser(vm.currentUser)
       } else {
-        samService.editUser(vm.currentUser)
+        samService.updateUser(vm.currentUser)
       }
     }
 
     vm.deleteUser = function(user) {
+      console.log(user.username)
       samService.deleteUser(user.username)
     }
 
