@@ -36,8 +36,8 @@
       <td>{{user.description}}</td>
       <td>{{user.role}}</td>
       <td>
-        <button title="Editar" class="btn btn-primary editable-table-button btn-xs btn-icon" ng-click="editUser(user.username)"><i class="ion-edit"></i></button>
-        <button title="Borrar" class="btn btn-danger editable-table-button btn-xs btn-icon" ng-click="removeUser(user.username)"><i class="ion-trash-a"></i></button>
+        <button title="Editar" class="btn btn-primary editable-table-button btn-xs btn-icon" ng-click="vm.editUser(user)"><i class="ion-edit"></i></button>
+        <button title="Borrar" class="btn btn-danger editable-table-button btn-xs btn-icon" ng-click="vm.deleteUser(user)"><i class="ion-trash-a"></i></button>
       </td>
     </tr>
     </tbody>

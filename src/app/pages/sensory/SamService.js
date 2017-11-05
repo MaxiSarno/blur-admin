@@ -538,10 +538,10 @@
       thiz.http(getUsers, 'GET', success, error)
     }
 
-    var saveUser = function(user, success, error) {
+    var addUser = function(user, success, error) {
       var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
-      var saveUser = userUrl + params
-      thiz.http(saveUser, 'POST', success, error)
+      var addUser = userUrl + params
+      thiz.http(addUser, 'POST', success, error)
     }
 
     var updateUser = function(user, success, error) {
@@ -578,7 +578,7 @@
       calcResult : calcResult,
 
       getUsers : getUsers,
-      saveUser : saveUser,
+      addUser : addUser,
       updateUser : updateUser,
       deleteUser : deleteUser
     }

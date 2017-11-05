@@ -12,6 +12,6 @@
     <select class="form-control" title="Rol" ng-model="vm.editUser.role" ng-options="r for r in vm.roles" required selectpicker></select>
   </div>
   <div class="form-group col-sm-1 col-xs-3">
-    <button type="submit" class="btn btn-primary btn-icon"><i class="ion-checkmark"></i></button>
+    <button type="submit" title="guardar" ng-click="saveUser()" class="btn btn-primary btn-icon"><i class="ion-checkmark"></i></button>
   </div>
 </form>

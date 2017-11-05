@@ -14,35 +14,22 @@
 
     vm.roles = [ 'USER', 'ADMIN']
 
-    //vars
-    vm.editUser = {
+    //aca guardo los datos del usuario que estoy creando o editando
+    vm.currentUser = {
       show : false,
+      new: true,
       username: '',
       password : '',
       description : '',
       role : vm.roles[0]
     }
 
-    $scope.users = [
-      {
-      	username: 'maxisar@gmail.com',
-      	password: 'tuvieja',
-      	description: 'Maxi Sarno',
-      	role: 'ADMIN'
-      },
-      {
-      	username: 'mfgc87@gmail.com',
-      	password: 'suvieja',
-      	description: 'flor Gimenez',
-      	role: 'USER'
-      }
-    ];
-
     vm.newUser = function() {
-      var showNow = !vm.editUser.show
+      var showNow = !vm.currentUser.show
       
-      vm.editUser = {
-        show : showNow,
+      vm.currentUser = {
+        currentUser : showNow,
+        new : true,
         username: '',
         password : '',
         description : '',
@@ -50,41 +37,29 @@
       }
     }
 
-    $scope.removeUser = function(index) {
-      $scope.users.splice(index, 1);
-    };
+    vm.editUser = function(user) {
+      vm.currentUser = {
+        show : true,
+        new : false,
+        username: user.username,
+        password : user.password,
+        description : user.description,
+        role : user.role
+      }
+    }
 
-    $scope.addUser = function()  	{
-      	console.log("addUser")
-      $scope.inserted = {
-        id: $scope.users.length+1,
-        username: null,
-        password: null,
-        description : null,
-        role: $scope.roles[0]
-      };
-      vm.currentUser = $scope.inserted
-      $scope.users.push($scope.inserted);
-    };
+    vm.saveUser = function() {
+      console.log("add or edit user")
+      if (vm.currentUser.new) {
+        samService.addUser(vm.currentUser)
+      } else {
+        samService.editUser(vm.currentUser)
+      }
+    }
 
-    $scope.saveUser = function(user) {
-      console.log("saveUser")
-      console.log(user)
-      console.log('$scope.inserted:'+$scope.inserted.username)
-      console.log('vm.currentUser'+vm.currentUser)
-
-      samService.saveUser(user, 
-      	function(data) {console.log('usuario creado')},
-      	function(data) {console.log('error al crear usuario')})
-      /*console.log($scope.users[$scope.users.length-1])*/
-      /*$scope.inserted = {
-        id: $scope.users.length+1,
-        name: '',
-        status: null,
-        group: null
-      };
-      $scope.users.push($scope.inserted);*/
-    };
+    vm.deleteUser = function(user) {
+      samService.deleteUser(user.username)
+    }
 
     // INIT
     samService.getUsers(
