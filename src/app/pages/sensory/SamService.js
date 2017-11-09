@@ -1,5 +1,8 @@
 /**
  * @author msarno
+ *
+ * Este es el servicio que le pega a la API, maneja TODO.
+ * Se podría dividir en servicios mas pequeños para cada resurso y mover http a un servicio commons
  */
 (function () {
   'use strict';
@@ -110,20 +113,14 @@
     var currentSamId = 0
 
     thiz.http = function(url, method, success, error) {
-      thiz.SetCredentials('maxisar@gmail.com','maxi')
-      /*var headers = {"Authorization": "Basic bWF4aXNhckBnbWFpbC5jb206bWF4aQ=="};
-      $http.get('http://localhost:8180/sam/evaluation', {headers: headers}).then(function (response) {console.log("hola")})
-*/
+      
       var req = {
         method: method,
         url: url,
         dataType: 'json',
         headers: {'Content-Type': 'application/json'},
         withCredentials: true,
-        useXDomain: true,
-        headers: {
-          'authorization': 'Basic bWF4aXNhckBnbWFpbC5jb206bWF4aQ==',
-        }
+        useXDomain: true
       }
 
       $http(req)
@@ -139,23 +136,15 @@
 
     thiz.SetCredentials = function (username, password) {
         var authdata = Base64.encode(username + ':' + password);
-        
-        /*$rootScope.globals = {
-            currentUser: {
-                username: username,
-                authdata: authdata
-            }
-        };*/
-
-        /*$http.defaults.headers.common.Authorization = 'Basic ' + user.accessToken;*/
         $http.defaults.headers.common.Authorization = 'Basic ' + authdata;
         /*$cookieStore.put('globals', $rootScope.globals);*/
     };
 
-    thiz.ClearCredentials = function () {
+    thiz.ClearCredentials = function (success, error) {
         $rootScope.globals = {};
         //$cookieStore.remove('globals');
         $http.defaults.headers.common.Authorization = 'Basic ';
+        success("credenciales borradas")
     };
 
 
@@ -376,7 +365,7 @@
         ]
     }*/
     /*BARS*/
-    var mockResult = {
+    /*var mockResult = {
         "samId": 3,
         "alpha": 0.1,
         "partialResults": [
@@ -485,7 +474,7 @@
                 "pValue": 1.2693179840539415e-12
             }
         ]
-    }
+    }*/
 
     var getList = function(success, error) {
       thiz.http(evaluationUrl, 'GET', success, error)
@@ -556,18 +545,16 @@
     }
 
     var login = function(user, success, error) {
-      if(user.username && user.password) {
-        
-        thiz.SetCredentials(user.username, user.password)
-        thiz.http(loginUrl, 'GET', success, error)
-
-      } else {
+      if (!user.username || !user.password) {
         error("credenciales vacias")
       }
+        
+      thiz.SetCredentials(user.username, user.password)
+      thiz.http(loginUrl, 'GET', success, error)
     }
 
     var logout = function(success, error) {
-      thiz.ClearCredentials()
+      thiz.ClearCredentials(success, error)
     }
 
 

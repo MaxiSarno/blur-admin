@@ -22,12 +22,10 @@
       }
 
       var error = function(data) {
-        console.log('error enel login:' + data)
+        console.log('ERROR en el login:' + data)
       }
 
       samService.login(vm.user, success, error)
-      $rootScope.$isLoggedIn = true
-      $state.go('dashboard')
     }
 
     vm.logout = function() {
@@ -35,7 +33,7 @@
         function(data) {
           $rootScope.$isLoggedIn = false
         }, function(data) {
-          console.log('error en el logout:' + data)
+          console.log('ERROR en el logout:' + data)
         })
       
     }
