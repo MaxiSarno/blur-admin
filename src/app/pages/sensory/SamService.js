@@ -555,6 +555,21 @@
       thiz.http(deleteUser, 'DELETE', success, error)
     }
 
+    var login = function(user, success, error) {
+      if(user.username && user.password) {
+        
+        thiz.SetCredentials(user.username, user.password)
+        thiz.http(loginUrl, 'GET', success, error)
+
+      } else {
+        error("credenciales vacias")
+      }
+    }
+
+    var logout = function(success, error) {
+      thiz.ClearCredentials()
+    }
+
 
     return {
       getCurrentSamId: function () {
@@ -579,7 +594,10 @@
       getUsers : getUsers,
       addUser : addUser,
       updateUser : updateUser,
-      deleteUser : deleteUser
+      deleteUser : deleteUser,
+
+      login : login,
+      logout : logout
     }
 
   }
