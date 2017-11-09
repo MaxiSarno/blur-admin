@@ -28,8 +28,8 @@
 <div class="body-bg"></div>
 <main ng-if="$pageFinishedLoading" ng-class="{ 'menu-collapsed': $baSidebarService.isMenuCollapsed() }">
 
-  <ba-sidebar></ba-sidebar>
-  <page-top></page-top>
+  <ba-sidebar ng-if="$isLoggedIn"></ba-sidebar>
+  <page-top ng-if="$isLoggedIn"></page-top>
 
   <div class="al-main">
     <div class="al-content">
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <footer class="al-footer clearfix">
+  <footer ng-if="$isLoggedIn" class="al-footer clearfix">
     <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
     <div class="al-footer-main clearfix">
       <div class="al-copy">Sensory Analisis Monitor 2017</div>
