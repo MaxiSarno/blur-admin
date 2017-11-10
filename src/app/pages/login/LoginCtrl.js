@@ -9,7 +9,7 @@
       .controller('LoginCtrl', LoginCtrl);
 
   /** @ngInject */
-  function LoginCtrl($rootScope, $scope, $state, samService) {
+  function LoginCtrl($rootScope, $scope, $state, commonsService) {
     var vm = this;
     vm.user = {}
 
@@ -27,13 +27,13 @@
         console.log('ERROR en el login:' + data)
       }
 
-      samService.login(vm.user, success, error)
+      commonsService.login(vm.user, success, error)
     }
     console
 
     vm.logout = function() {
       console.log("logout vieja")
-      samService.logout(
+      commonsService.logout(
         function(data) {
           $rootScope.$isLoggedIn = false
         }, function(data) {

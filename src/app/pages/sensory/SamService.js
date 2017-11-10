@@ -17,7 +17,7 @@
       $httpProvider.defaults.withCredentials = true;
     })
     .service('samService', samService)
-    .service('samCommons', samCommons)
+    .service('commonsService', commonsService)
     .factory('Base64', function () {
         /* jshint ignore:start */
 
@@ -105,52 +105,25 @@
     });
 
   /** @ngInject */
-  function samCommons($http) {
-    this.setCookie = function (cookieKey, cookieValue, expirationHours) {
-      // uso cookies de js directo, old school dawg
-      // porque $cookies de angular no permiten definir la expiracion
-      var cookieString = cookieKey + '=' + cookieValue;
-      if (expirationHours) {
-        var date = new Date();
-        date.setTime(date.getTime() + (expirationHours * 60 * 60 * 1000));
-        cookieString += ', expires=' + date.toGMTString();
-      }
-      document.cookie = cookieString;
-    };
+  function commonsService($http, Base64) {
 
-    this.deleteCookie = function (cookieName) {
-      var d = new Date();
-      d.setYear(1980);
-      var cookieString = cookieName + '=' + ', expires=' + d.toGMTString();
-      document.cookie = cookieString;
-    };
-
-    this.getCookie = function (cookieName) {
-      var name = cookieName + "=";
-      var ca = document.cookie.split(';');
-      for (var i = 0; i < ca.length; i++) {
-        var c = ca[i].trim();
-        if (c.indexOf(name) == 0) {
-          // quito la expiracion
-          var value = c.substring(name.length, c.length);
-          value = value.slice(0, value.indexOf(", expires"));
-          return value;
-         }
-      }
-      return "";
-    };
-  }
-
-  function samService($sce, $http, Base64, samCommons, $rootScope) {
-
-    var evaluationUrl = 'http://localhost:8180/sam/evaluation'
-    var userUrl = 'http://localhost:8180/sam/user'
     var loginUrl = 'http://localhost:8180/sam/login'
-
     var thiz = this
-    var currentSamId = 0
 
-    thiz.http = function(url, method, success, error) {
+    thiz.SetCredentials = function (username, password) {
+      var authdata = Base64.encode(username + ':' + password);
+      $http.defaults.headers.common.Authorization = 'Basic ' + authdata;
+      /*$cookieStore.put('globals', $rootScope.globals);*/
+    }
+
+    thiz.ClearCredentials = function (success, error) {
+      $rootScope.globals = {};
+      //$cookieStore.remove('globals');
+      $http.defaults.headers.common.Authorization = 'Basic ';
+      success("credenciales borradas")
+    }
+
+    var http = function(url, method, success, error) {
       
       var req = {
         method: method,
@@ -172,19 +145,75 @@
         })
     }
 
-    thiz.SetCredentials = function (username, password) {
-        var authdata = Base64.encode(username + ':' + password);
-        $http.defaults.headers.common.Authorization = 'Basic ' + authdata;
-        /*$cookieStore.put('globals', $rootScope.globals);*/
-    };
+    var login = function(user, success, error) {
+      if (!user.username || !user.password) {
+        error("credenciales vacias")
+      }
+        
+      thiz.SetCredentials(user.username, user.password)
+      http(loginUrl, 'GET', success, error)
+    }
 
-    thiz.ClearCredentials = function (success, error) {
-        $rootScope.globals = {};
-        //$cookieStore.remove('globals');
-        $http.defaults.headers.common.Authorization = 'Basic ';
-        success("credenciales borradas")
-    };
+    var logout = function(success, error) {
+      thiz.ClearCredentials(success, error)
+    }
 
+    var isLoggedIn = function() {
+      return true
+    }
+
+    var setCookie = function (cookieKey, cookieValue, expirationHours) {
+      // uso cookies de js directo, old school dawg
+      // porque $cookies de angular no permiten definir la expiracion
+      var cookieString = cookieKey + '=' + cookieValue;
+      if (expirationHours) {
+        var date = new Date();
+        date.setTime(date.getTime() + (expirationHours * 60 * 60 * 1000));
+        cookieString += ', expires=' + date.toGMTString();
+      }
+      document.cookie = cookieString;
+    }
+
+    var deleteCookie = function (cookieName) {
+      var d = new Date();
+      d.setYear(1980);
+      var cookieString = cookieName + '=' + ', expires=' + d.toGMTString();
+      document.cookie = cookieString;
+    }
+
+    var getCookie = function (cookieName) {
+      var name = cookieName + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) {
+          // quito la expiracion
+          var value = c.substring(name.length, c.length);
+          value = value.slice(0, value.indexOf(", expires"));
+          return value;
+         }
+      }
+      return ""
+    }
+
+    return {
+      http : http,
+
+      login : login,
+      logout : logout,
+      isLoggedIn : isLoggedIn,
+
+      getCookie : getCookie,
+      setCookie : setCookie,
+      deleteCookie : deleteCookie
+    }
+  }
+
+  function samService($sce, $http, Base64, commonsService, $rootScope) {
+
+    var evaluationUrl = 'http://localhost:8180/sam/evaluation'
+    var userUrl = 'http://localhost:8180/sam/user'
+    var currentSamId = 0
 
     var mock = false
     /*RADAR*/
@@ -515,27 +544,27 @@
     }*/
 
     var getList = function(success, error) {
-      thiz.http(evaluationUrl, 'GET', success, error)
+      commonsService.http(evaluationUrl, 'GET', success, error)
     }
 
     var getDetail = function(samId, success, error) {
       var getDetailUrl = evaluationUrl+'/'+samId
-      thiz.http(getDetailUrl, 'GET', success, error)
+      commonsService.http(getDetailUrl, 'GET', success, error)
     }
 
     var saveDetail = function(samDetail, success, error) {
       var saveDetailUrl = evaluationUrl+'?name='+samDetail.name+'&type='+samDetail.type+'&scale='+samDetail.scale
-      thiz.http(saveDetailUrl, 'POST', success, error)
+      commonsService.http(saveDetailUrl, 'POST', success, error)
     }
 
     var getDesign = function(samId, success, error) {
       var getDesignUrl = evaluationUrl+'/'+samId+'/design'
-      thiz.http(getDesignUrl, 'GET', success, error)
+      commonsService.http(getDesignUrl, 'GET', success, error)
     }
 
     var saveDesign = function(samId, samDesign, success, error) {
       var saveDesignUrl = evaluationUrl+'/'+samId+'/design?judges='+samDesign.judges+'&samples='+samDesign.samples
-      thiz.http(saveDesignUrl, 'POST', success, error)
+      commonsService.http(saveDesignUrl, 'POST', success, error)
     }
 
     var getDesignCsvUrl = function(samId, judges, samples) {
@@ -551,48 +580,35 @@
         success(mockResult)
       } else {
         var getResultUrl = evaluationUrl+'/'+samId+'/results'
-        thiz.http(getResultUrl, 'GET', success, error)
+        commonsService.http(getResultUrl, 'GET', success, error)
       }
     }
 
     var calcResult = function(samId, alpha, success, error) {
       var calcResultUrl = evaluationUrl+'/'+samId+'/results?alpha='+alpha
-      thiz.http(calcResultUrl, 'POST', success, error)
+      commonsService.http(calcResultUrl, 'POST', success, error)
     }
 
     var getUsers = function(success, error) {
       var getUsers = userUrl
-      thiz.http(getUsers, 'GET', success, error)
+      commonsService.http(getUsers, 'GET', success, error)
     }
 
     var addUser = function(user, success, error) {
       var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
       var addUser = userUrl + params
-      thiz.http(addUser, 'POST', success, error)
+      commonsService.http(addUser, 'POST', success, error)
     }
 
     var updateUser = function(user, success, error) {
       var params = '?username='+ user.username + '&password=' + user.password + '&description=' + user.description + '&role=' + user.role
       var updateUser = userUrl + params
-      thiz.http(updateUser, 'PUT', success, error)
+      commonsService.http(updateUser, 'PUT', success, error)
     }
 
     var deleteUser = function(username, success, error) {
       var deleteUser = userUrl + '?username=' + username
-      thiz.http(deleteUser, 'DELETE', success, error)
-    }
-
-    var login = function(user, success, error) {
-      if (!user.username || !user.password) {
-        error("credenciales vacias")
-      }
-        
-      thiz.SetCredentials(user.username, user.password)
-      thiz.http(loginUrl, 'GET', success, error)
-    }
-
-    var logout = function(success, error) {
-      thiz.ClearCredentials(success, error)
+      commonsService.http(deleteUser, 'DELETE', success, error)
     }
 
 
@@ -619,10 +635,7 @@
       getUsers : getUsers,
       addUser : addUser,
       updateUser : updateUser,
-      deleteUser : deleteUser,
-
-      login : login,
-      logout : logout
+      deleteUser : deleteUser
     }
 
   }
