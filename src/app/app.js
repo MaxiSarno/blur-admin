@@ -24,7 +24,23 @@ angular.module('BlurAdmin', [
  * - y como salimos de aqui?
  * - pues cavando!
  */
- .run(['$rootScope', '$location', '$state', function ($rootScope, $location, $state) {
+ .run(['$rootScope', '$location', '$state', function ($rootScope, $location, $state, commonsService) {
+
+    var isLoggedIn
+
+    var name = "isLoggedIn" + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(name) == 0) {
+        // quito la expiracion
+        var value = c.substring(name.length, c.length);
+        value = value.slice(0, value.indexOf(", expires"));
+        isLoggedIn = value;
+       }
+    }
+    $rootScope.$isLoggedIn = isLoggedIn
+
 
     // para ui.router es $routeChangeStart
     // para ngRoute es $stateChangeStart

@@ -149,9 +149,14 @@
       if (!user.username || !user.password) {
         error("credenciales vacias")
       }
-        
-      thiz.SetCredentials(user.username, user.password)
-      http(loginUrl, 'GET', success, error)
+
+      var mySuccess = function(data) {
+        thiz.SetCredentials(user.username, user.password)
+        setCookie("isLoggedIn",true,1)
+        success(data)
+      }
+
+      http(loginUrl, 'GET', mySuccess, error)
     }
 
     var logout = function(success, error) {
