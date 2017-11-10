@@ -29,15 +29,16 @@
 
       samService.login(vm.user, success, error)
     }
+    console
 
     vm.logout = function() {
+      console.log("logout vieja")
       samService.logout(
         function(data) {
           $rootScope.$isLoggedIn = false
         }, function(data) {
           console.log('ERROR en el logout:' + data)
-        })
-      
+        }) 
     }
 
   } 

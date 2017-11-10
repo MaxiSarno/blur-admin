@@ -2,7 +2,8 @@
  * @author msarno
  *
  * Este es el servicio que le pega a la API, maneja TODO.
- * Se podría dividir en servicios mas pequeños para cada resurso y mover http a un servicio commons
+ * Refactor tip: dividir en servicios mas pequeños para cada resurso 
+ * y mover http y base64 a un servicio commons
  */
 (function () {
   'use strict';
@@ -16,6 +17,7 @@
       $httpProvider.defaults.withCredentials = true;
     })
     .service('samService', samService)
+    .service('samCommons', samCommons)
     .factory('Base64', function () {
         /* jshint ignore:start */
 
@@ -103,7 +105,43 @@
     });
 
   /** @ngInject */
-  function samService($sce, $http, Base64, $rootScope) {
+  function samCommons($http) {
+    this.setCookie = function (cookieKey, cookieValue, expirationHours) {
+      // uso cookies de js directo, old school dawg
+      // porque $cookies de angular no permiten definir la expiracion
+      var cookieString = cookieKey + '=' + cookieValue;
+      if (expirationHours) {
+        var date = new Date();
+        date.setTime(date.getTime() + (expirationHours * 60 * 60 * 1000));
+        cookieString += ', expires=' + date.toGMTString();
+      }
+      document.cookie = cookieString;
+    };
+
+    this.deleteCookie = function (cookieName) {
+      var d = new Date();
+      d.setYear(1980);
+      var cookieString = cookieName + '=' + ', expires=' + d.toGMTString();
+      document.cookie = cookieString;
+    };
+
+    this.getCookie = function (cookieName) {
+      var name = cookieName + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(name) == 0) {
+          // quito la expiracion
+          var value = c.substring(name.length, c.length);
+          value = value.slice(0, value.indexOf(", expires"));
+          return value;
+         }
+      }
+      return "";
+    };
+  }
+
+  function samService($sce, $http, Base64, samCommons, $rootScope) {
 
     var evaluationUrl = 'http://localhost:8180/sam/evaluation'
     var userUrl = 'http://localhost:8180/sam/user'
