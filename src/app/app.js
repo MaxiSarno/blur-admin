@@ -24,7 +24,7 @@ angular.module('BlurAdmin', [
  * - y como salimos de aqui?
  * - pues cavando!
  */
- .run(['$rootScope', '$location', '$state', function ($rootScope, $location, $state, commonsService) {
+ .run(['$rootScope', '$location', '$state', 'commonsService', function ($rootScope, $location, $state, commonsService) {
 
     var isLoggedIn
 
@@ -42,6 +42,11 @@ angular.module('BlurAdmin', [
     $rootScope.$isLoggedIn = isLoggedIn
 
 
+    $rootScope.$logout = function() {
+      commonsService.logout(function() {$state.go('login')})
+    }
+
+
     // para ui.router es $routeChangeStart
     // para ngRoute es $stateChangeStart
     $rootScope.$on('$stateChangeStart', function (event, currRoute, prevRoute) {
@@ -49,8 +54,6 @@ angular.module('BlurAdmin', [
       var isInLogInPage = currRoute.url.indexOf('/login') !== -1;
 
       console.log('url:'+currRoute.url)
-      console.log('isInLogInPage:'+isInLogInPage)
-      console.log('$rootScope:'+$rootScope)
       console.log('$rootScope.$isLoggedIn:'+$rootScope.$isLoggedIn)
 
       if (!$rootScope.$isLoggedIn && !isInLogInPage) {
@@ -64,5 +67,7 @@ angular.module('BlurAdmin', [
       } else {
         console.log('ALLOW');
       }
-    });
+    })
+
+
 }])

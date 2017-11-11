@@ -105,7 +105,7 @@
     });
 
   /** @ngInject */
-  function commonsService($http, Base64) {
+  function commonsService($http, $rootScope, Base64) {
 
     var loginUrl = 'http://localhost:8180/sam/login'
     var thiz = this
@@ -160,6 +160,8 @@
     }
 
     var logout = function(success, error) {
+      console.log("root logout")
+      $rootScope.$isLoggedIn = false
       thiz.ClearCredentials(success, error)
     }
 
