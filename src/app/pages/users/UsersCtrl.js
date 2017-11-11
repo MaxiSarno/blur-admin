@@ -78,19 +78,27 @@
       }
 
       samService.deleteUser(user.username, success, error)
-      //$state.reload() (injectar $state a UserCtrl) rompe la lista
-      //$window.location.reload() (injectar $window a UserCtrl) recarga toooodo, tarda mucho
     }
 
-    // INIT
     vm.getUserList = function() {
       samService.getUsers(
-        function(data){vm.smartTableData = data}, 
+        function(data){
+          console.log("cargando lista de usuarios")
+          vm.smartTableData = data}, 
         function(data){console.log(data)}
       )
     }
 
-    vm.getUserList()
+    // INIT
+    // por alguna razon, los datos se pisan si los cargo sin el timeout
+    vm.init = function() {
+      setTimeout(
+        function(){
+          vm.getUserList()
+        }, 500);
+    }
+
+    vm.init()
 
   } 
 

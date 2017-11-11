@@ -169,9 +169,7 @@
     }
 
     var isLoggedIn = function() {
-        console.log('commons -> $rootScope.$isLoggedIn:'+$rootScope.$isLoggedIn)
       if (!$rootScope.$isLoggedIn) {
-        console.log('getCookie("isLoggedIn"):'+getCookie("isLoggedIn"))
         $rootScope.$isLoggedIn = getCookie("isLoggedIn")
       }
       return $rootScope.$isLoggedIn

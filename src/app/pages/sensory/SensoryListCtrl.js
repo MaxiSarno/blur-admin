@@ -18,7 +18,20 @@
       samService.setCurrentSamId(id)
     }
 
-    samService.getList(function(data){vm.smartTableData = data}, function(data){console.log(data)})
+    vm.getList = function() {
+      samService.getList(function(data){vm.smartTableData = data}, function(data){console.log(data)})
+    }
+
+    // INIT
+    // por alguna razon, los datos se pisan si los cargo sin el timeout
+    vm.init = function() {
+      setTimeout(
+        function(){
+          vm.getList()
+        }, 500);
+    }
+
+    vm.init()
   }
 
 })();
