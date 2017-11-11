@@ -16,10 +16,6 @@
     vm.login = function() {
       var success = function(data) {
         console.log('success')
-        $rootScope.user = vm.user
-        $rootScope.user.role = data.role
-        $rootScope.user.description = data.description
-        $rootScope.$isLoggedIn = true
         $state.go('dashboard')
       }
 

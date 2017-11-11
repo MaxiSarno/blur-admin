@@ -116,11 +116,10 @@
       /*$cookieStore.put('globals', $rootScope.globals);*/
     }
 
-    thiz.ClearCredentials = function (success, error) {
-      $rootScope.globals = {};
+    thiz.ClearCredentials = function () {
+      $rootScope.globals = {}
       //$cookieStore.remove('globals');
-      $http.defaults.headers.common.Authorization = 'Basic ';
-      success("credenciales borradas")
+      $http.defaults.headers.common.Authorization = 'Basic '
     }
 
     var http = function(url, method, success, error) {
@@ -151,6 +150,8 @@
       }
 
       var mySuccess = function(data) {
+        $rootScope.user = data
+        $rootScope.$isLoggedIn = true
         thiz.SetCredentials(user.username, user.password)
         setCookie("isLoggedIn",true,1)
         success(data)
@@ -162,11 +163,18 @@
     var logout = function(success, error) {
       console.log("root logout")
       $rootScope.$isLoggedIn = false
-      thiz.ClearCredentials(success, error)
+      deleteCookie("isLoggedIn")
+      thiz.ClearCredentials()
+      success("logout ok")
     }
 
     var isLoggedIn = function() {
-      return true
+        console.log('commons -> $rootScope.$isLoggedIn:'+$rootScope.$isLoggedIn)
+      if (!$rootScope.$isLoggedIn) {
+        console.log('getCookie("isLoggedIn"):'+getCookie("isLoggedIn"))
+        $rootScope.$isLoggedIn = getCookie("isLoggedIn")
+      }
+      return $rootScope.$isLoggedIn
     }
 
     var setCookie = function (cookieKey, cookieValue, expirationHours) {
