@@ -9,7 +9,7 @@
       .controller('UsersCtrl', UsersCtrl);
 
   /** @ngInject */
-  function UsersCtrl($scope, $http, samService, toastr) {
+  function UsersCtrl($scope, $http, samService, commonsService, toastr) {
     var vm = this;
 
     vm.roles = [ 'USER', 'ADMIN']
@@ -22,6 +22,10 @@
       password : '',
       description : '',
       role : vm.roles[0]
+    }
+
+    vm.userIsAllowed = function() {
+      return commonsService.loggedInUserIsAdmin()
     }
 
     vm.newUser = function() {

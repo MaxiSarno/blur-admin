@@ -9,7 +9,7 @@
       </label>
     </div>
     <div class="col-md-6 align-right">
-      <button title="Nuevo usuario" ng-click="vm.newUser()" type="button" class="btn btn-primary btn-icon"><i class="ion-android-person-add"></i></button>
+      <button title="Nuevo usuario" ng-click="vm.newUser()" ng-show="vm.userIsAllowed()" type="button" class="btn btn-primary btn-icon"><i class="ion-android-person-add"></i></button>
     </div>
   </div>
   <table class="table" st-table="vm.smartTableData">
@@ -37,8 +37,8 @@
       <td>{{user.description}}</td>
       <td>{{user.role}}</td>
       <td>
-        <button title="Editar" class="btn btn-primary editable-table-button btn-xs btn-icon" ng-click="vm.editUser(user)"><i class="ion-edit"></i></button>
-        <button title="Borrar" class="btn btn-danger editable-table-button btn-xs btn-icon" ng-click="vm.deleteUser(user)"><i class="ion-trash-a"></i></button>
+        <button title="Editar" ng-click="vm.editUser(user)" class="btn btn-primary editable-table-button btn-xs btn-icon"><i class="ion-edit"></i></button>
+        <button title="Borrar"  ng-click="vm.deleteUser(user)" class="btn btn-danger editable-table-button btn-xs btn-icon"><i class="ion-trash-a"></i></button>
       </td>
     </tr>
     </tbody>

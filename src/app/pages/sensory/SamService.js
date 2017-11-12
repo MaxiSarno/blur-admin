@@ -103,19 +103,6 @@
     var loginUrl = 'http://localhost:8180/sam/login'
     var thiz = this
 
-    thiz.SetCredentials = function (username, password) {
-      var authdata = Base64.encode(username + ':' + password)
-      var authorization = 'Basic ' + authdata
-
-      setCookie('authorization', authorization, 1)
-      $http.defaults.headers.common.Authorization = authorization
-    }
-
-    thiz.ClearCredentials = function () {
-      deleteCookie('authorization')
-      $http.defaults.headers.common.Authorization = 'Basic '
-    }
-
     var http = function(url, method, success, error) {
 
       if (!$http.defaults.headers.common.Authorization) {
@@ -142,6 +129,8 @@
         })
     }
 
+    // LOG IN
+
     var login = function(user, success, error) {
       if (!user.username || !user.password) {
         error("credenciales vacias")
@@ -149,9 +138,11 @@
 
       var mySuccess = function(data) {
         $rootScope.user = data
-        $rootScope.$isLoggedIn = true
-        thiz.SetCredentials(user.username, user.password)
+        setCookie("user",$rootScope.user,1)
+        $rootScope.$isLoggedIn = true        
         setCookie("isLoggedIn",true,1)
+
+        thiz.SetCredentials(user.username, user.password)
         success(data)
       }
 
@@ -169,9 +160,34 @@
     var isLoggedIn = function() {
       if (!$rootScope.$isLoggedIn) {
         $rootScope.$isLoggedIn = getCookie("isLoggedIn")
+        $rootScope.user = getCookie("user")
       }
       return $rootScope.$isLoggedIn
     }
+
+    var loggedInUserIsAdmin = function() {
+        if (!$rootScope.user) {
+            console.log("no hay user en el rootScope")
+        }
+        return $rootScope.user.role === 'ADMIN'
+    }
+
+    // CREDENTIALS
+
+    thiz.SetCredentials = function (username, password) {
+      var authdata = Base64.encode(username + ':' + password)
+      var authorization = 'Basic ' + authdata
+
+      setCookie('authorization', authorization, 1)
+      $http.defaults.headers.common.Authorization = authorization
+    }
+
+    thiz.ClearCredentials = function () {
+      deleteCookie('authorization')
+      $http.defaults.headers.common.Authorization = 'Basic '
+    }
+
+    // COOKIES
 
     var setCookie = function (cookieKey, cookieValue, expirationHours) {
       // uso cookies de js directo, old school dawg
@@ -213,6 +229,7 @@
       login : login,
       logout : logout,
       isLoggedIn : isLoggedIn,
+      loggedInUserIsAdmin : loggedInUserIsAdmin,
 
       getCookie : getCookie,
       setCookie : setCookie,
