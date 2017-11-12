@@ -141,10 +141,14 @@
 
         $rootScope.$isLoggedIn = true    
         $rootScope.user = user
+        $rootScope.user.description = data.description
         $rootScope.user.role = data.role
 
         setCookie("isLoggedIn",true,1)
-        setCookie("user",$rootScope.user,1)
+        setCookie("user.username",$rootScope.user.username,1)
+        setCookie("user.password",$rootScope.user.password,1)
+        setCookie("user.description",$rootScope.user.description,1)
+        setCookie("user.role",$rootScope.user.role,1)
 
         success(data)
       }
@@ -163,7 +167,11 @@
     var isLoggedIn = function() {
       if (!$rootScope.$isLoggedIn) {
         $rootScope.$isLoggedIn = getCookie("isLoggedIn")
-        $rootScope.user = getCookie("user")
+        $rootScope.user = {}
+        $rootScope.user.username = getCookie("user.username")
+        $rootScope.user.password = getCookie("user.password")
+        $rootScope.user.description = getCookie("user.description")
+        $rootScope.user.role = getCookie("user.role")
       }
       return $rootScope.$isLoggedIn
     }
