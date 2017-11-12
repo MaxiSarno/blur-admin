@@ -22,6 +22,13 @@
       samService.getList(function(data){vm.smartTableData = data}, function(data){console.log(data)})
     }
 
+    vm.deleteSam = function(samId) {
+      samService.deleteSam(samId,
+        function(data){vm.init()},
+        function(data){console.log('error borrando:'+data)
+      })
+    }
+
     vm.userIsAllowed = function() {
       return commonsService.loggedInUserIsAdmin()
     }

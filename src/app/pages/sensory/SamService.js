@@ -593,6 +593,10 @@
       commonsService.http(evaluationUrl, 'GET', success, error)
     }
 
+    var deleteSam = function(samId, success, error) {
+      commonsService.http(evaluationUrl+'/'+samId, 'DELETE', success, error)
+    }
+
     var getDetail = function(samId, success, error) {
       var getDetailUrl = evaluationUrl+'/'+samId
       commonsService.http(getDetailUrl, 'GET', success, error)
@@ -666,6 +670,8 @@
         currentSamId = value
       },
       getList : getList,
+      deleteSam : deleteSam,
+      
       getDetail : getDetail,
       saveDetail : saveDetail,
 
