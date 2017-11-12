@@ -42,7 +42,7 @@
       <td>{{item.type}}</td>
       <td>{{item.scale}}</td>
       <td>{{item.author}}</td>
-      <td>{{item.created}}</td>
+      <td>{{item.created}}<button title="Borrar" ng-click="vm.deleteSam(item.samId)" ng-show="vm.userIsAllowed()" class="btn btn-danger editable-table-button btn-xs btn-icon"><i class="ion-trash-a"></i></button></td>
     </tr>
     </tbody>
     <tfoot>
