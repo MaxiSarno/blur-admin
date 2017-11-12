@@ -43,9 +43,6 @@ angular.module('BlurAdmin', [
 
       var isInLogInPage = currRoute.url.indexOf('/login') !== -1;
 
-      console.log('url:'+currRoute.url)
-      console.log('commonsService.isLoggedIn():'+commonsService.isLoggedIn())
-
       if (!commonsService.isLoggedIn() && !isInLogInPage) {
         console.log('DENY : Redirecting to Login');
         event.preventDefault();

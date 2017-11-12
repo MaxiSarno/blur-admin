@@ -157,10 +157,17 @@
     }
 
     var logout = function(success, error) {
-      console.log("root logout")
-      $rootScope.$isLoggedIn = false
-      deleteCookie("isLoggedIn")
       thiz.ClearCredentials()
+
+      $rootScope.$isLoggedIn = false
+      $rootScope.user = {}
+
+      deleteCookie("isLoggedIn")
+      deleteCookie("user.username")
+      deleteCookie("user.password")
+      deleteCookie("user.description")
+      deleteCookie("user.role")
+      
       success("logout ok")
     }
 
