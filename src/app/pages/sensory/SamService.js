@@ -3,19 +3,12 @@
  *
  * Este es el servicio que le pega a la API, maneja TODO.
  * Refactor tip: dividir en servicios mas pequeños para cada resurso 
- * y mover http y base64 a un servicio commons
+ * y mover commons y Base64 a otro archivo
  */
 (function () {
   'use strict';
 
   angular.module('BlurAdmin.pages.sensory')
-    .config(function($httpProvider) {
-      $httpProvider.defaults.headers.common.Authorization = 'Basic bWF4aXNhckBnbWFpbC5jb206bWF4aQ=='
-      //Enable cross domain calls
-      $httpProvider.defaults.useXDomain = true;
-      //Send all requests, even OPTIONS, with credentials
-      $httpProvider.defaults.withCredentials = true;
-    })
     .service('samService', samService)
     .service('commonsService', commonsService)
     .factory('Base64', function () {
@@ -111,19 +104,24 @@
     var thiz = this
 
     thiz.SetCredentials = function (username, password) {
-      var authdata = Base64.encode(username + ':' + password);
-      $http.defaults.headers.common.Authorization = 'Basic ' + authdata;
-      /*$cookieStore.put('globals', $rootScope.globals);*/
+      var authdata = Base64.encode(username + ':' + password)
+      var authorization = 'Basic ' + authdata
+
+      setCookie('authorization', authorization, 1)
+      $http.defaults.headers.common.Authorization = authorization
     }
 
     thiz.ClearCredentials = function () {
-      $rootScope.globals = {}
-      //$cookieStore.remove('globals');
+      deleteCookie('authorization')
       $http.defaults.headers.common.Authorization = 'Basic '
     }
 
     var http = function(url, method, success, error) {
-      
+
+      if (!$http.defaults.headers.common.Authorization) {
+        $http.defaults.headers.common.Authorization = getCookie('authorization')
+      }
+
       var req = {
         method: method,
         url: url,
