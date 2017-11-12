@@ -9,7 +9,7 @@
       .controller('UsersCtrl', UsersCtrl);
 
   /** @ngInject */
-  function UsersCtrl($scope, $http, samService, commonsService, toastr) {
+  function UsersCtrl($scope, samService, commonsService, toastr) {
     var vm = this;
 
     vm.roles = [ 'USER', 'ADMIN']
@@ -88,18 +88,12 @@
 
     vm.getUserList = function() {
       samService.getUsers(
-        function(data){
-          console.log("cargando lista de usuarios")
-          vm.smartTableData = data}, 
+        function(data){vm.smartTableData = data}, 
         function(data){console.log(data)}
       )
     }
 
     vm.validateUser = function(user) {
-      /*if (!user.username.$valid) {
-        console.log("invalid username")
-        return false
-      }*/
       var EMAIL_REGEXP = /^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
       if (!user.username || !EMAIL_REGEXP.test(user.username)) {
         vm.notify('error', 'Error al crear usuario', 'El email no es valido')

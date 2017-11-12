@@ -9,7 +9,7 @@
       .controller('SensoryEvaluationCtrl', SensoryEvaluationCtrl);
 
   /** @ngInject */
-  function SensoryEvaluationCtrl($scope, $http, samService) {
+  function SensoryEvaluationCtrl($http, $scope, samService, commonsService, toastr) {
     var vm = this;
 
     vm.samDetail = {}
@@ -62,23 +62,13 @@
         data: formData 
       }
 
-      $http(req).success(function(data) {
-        console.log("ok")                 
-        /*toaster.pop(
-            'success',
-            null,
-            'Los nuevos rangos se cargaron de manera exitosa'
-        );
-        $route.reload();*/
-      }).error(function(data) {
-        console.log("error!!!")        
-        /*toaster.pop(
-            'error',
-            null,
-            'Se produjo un error durante la carga del archivo. Por favor verifique la completitud de cada uno de los datos.'
-        );
-        $route.reload();*/
-      });
+      $http(req)
+        .success(function(data) {
+          vm.notify('success', 'Carga exitosa', 'documento cargado con éxito')
+        })
+        .error(function(data) {
+          vm.notify('error', 'Error de carga', data)
+        });
     }
 
     vm.round = function(num, places) {
@@ -144,6 +134,27 @@
       return samService.calcResult(vm.samDetail.samId, vm.samResult.alpha, 
         vm.processResult,
         function(data){console.log('Error en vm.calcSamResult samId:'+vm.samDetail.samId)})
+    }
+
+    vm.notify = function(type, title, message) {
+      openedToasts.push(toastr[type](message, title));
+    }
+
+    var openedToasts = [];
+    $scope.options = {
+      autoDismiss: false,
+      positionClass: 'toast-top-right',
+      type: 'info',
+      timeOut: '5000',
+      extendedTimeOut: '2000',
+      allowHtml: false,
+      closeButton: false,
+      tapToDismiss: true,
+      progressBar: false,
+      newestOnTop: true,
+      maxOpened: 0,
+      preventDuplicates: false,
+      preventOpenDuplicates: false
     }
 
     // initialize
