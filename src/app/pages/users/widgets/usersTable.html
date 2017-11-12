@@ -33,7 +33,7 @@
     <tbody>
     <tr ng-repeat="user in vm.smartTableData">
       <td class="table-id">{{user.samId}}</td>
-      <td><a href="#/users/edit" ng-click="vm.guardarUsername(user.username)">{{user.username}}</a></td>
+      <td><a href ng-click="vm.editUser(user)">{{user.username}}</a></td>
       <td>{{user.description}}</td>
       <td>{{user.role}}</td>
       <td>
