@@ -15,7 +15,7 @@
 
     vm.login = function() {
       var success = function(data) {
-        console.log('success')
+        console.log('login success:'+data)
         $state.go('dashboard')
       }
 

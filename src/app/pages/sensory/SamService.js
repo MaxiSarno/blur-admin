@@ -137,22 +137,23 @@
       }
 
       var mySuccess = function(data) {
-        thiz.SetCredentials(user.username, user.password)
-
         $rootScope.$isLoggedIn = true    
-        $rootScope.user = user
-        $rootScope.user.description = data.description
-        $rootScope.user.role = data.role
+        $rootScope.$user = {}
+        $rootScope.$user.username = data.username
+        $rootScope.$user.password = user.password
+        $rootScope.$user.description = data.description
+        $rootScope.$user.role = data.role
 
         setCookie("isLoggedIn",true,1)
-        setCookie("user.username",$rootScope.user.username,1)
-        setCookie("user.password",$rootScope.user.password,1)
-        setCookie("user.description",$rootScope.user.description,1)
-        setCookie("user.role",$rootScope.user.role,1)
+        setCookie("user.username",$rootScope.$user.username,1)
+        setCookie("user.password",$rootScope.$user.password,1)
+        setCookie("user.description",$rootScope.$user.description,1)
+        setCookie("user.role",$rootScope.$user.role,1)
 
         success(data)
       }
 
+      thiz.SetCredentials(user.username, user.password)
       http(loginUrl, 'GET', mySuccess, error)
     }
 
@@ -160,7 +161,7 @@
       thiz.ClearCredentials()
 
       $rootScope.$isLoggedIn = false
-      $rootScope.user = {}
+      $rootScope.$user = {}
 
       deleteCookie("isLoggedIn")
       deleteCookie("user.username")
@@ -174,20 +175,22 @@
     var isLoggedIn = function() {
       if (!$rootScope.$isLoggedIn) {
         $rootScope.$isLoggedIn = getCookie("isLoggedIn")
-        $rootScope.user = {}
-        $rootScope.user.username = getCookie("user.username")
-        $rootScope.user.password = getCookie("user.password")
-        $rootScope.user.description = getCookie("user.description")
-        $rootScope.user.role = getCookie("user.role")
+        $rootScope.$user = {}
+        $rootScope.$user.username = getCookie("user.username")
+        $rootScope.$user.password = getCookie("user.password")
+        $rootScope.$user.description = getCookie("user.description")
+        $rootScope.$user.role = getCookie("user.role")
       }
       return $rootScope.$isLoggedIn
     }
 
     var loggedInUserIsAdmin = function() {
-        if (!$rootScope.user) {
-            console.log("no hay user en el rootScope")
+        console.log('loggedInUserIsAdmin')
+
+        if (!$rootScope.$user) {
+            return false
         }
-        return $rootScope.user.role === 'ADMIN'
+        return $rootScope.$user.role === 'ADMIN'
     }
 
     // CREDENTIALS
@@ -671,7 +674,7 @@
       },
       getList : getList,
       deleteSam : deleteSam,
-      
+
       getDetail : getDetail,
       saveDetail : saveDetail,
 
