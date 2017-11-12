@@ -9,7 +9,7 @@
       .controller('SensoryListCtrl', SensoryListCtrl);
 
   /** @ngInject */
-  function SensoryListCtrl($scope, $http, samService) {
+  function SensoryListCtrl($scope, $http, samService, commonsService) {
     var vm = this
     $scope.smartTablePageSize = 10;
     samService.setCurrentSamId(0)
@@ -20,6 +20,10 @@
 
     vm.getList = function() {
       samService.getList(function(data){vm.smartTableData = data}, function(data){console.log(data)})
+    }
+
+    vm.userIsAllowed = function() {
+      return commonsService.loggedInUserIsAdmin()
     }
 
     // INIT

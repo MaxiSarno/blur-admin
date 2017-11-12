@@ -137,12 +137,15 @@
       }
 
       var mySuccess = function(data) {
-        $rootScope.user = data
-        setCookie("user",$rootScope.user,1)
-        $rootScope.$isLoggedIn = true        
-        setCookie("isLoggedIn",true,1)
-
         thiz.SetCredentials(user.username, user.password)
+
+        $rootScope.$isLoggedIn = true    
+        $rootScope.user = user
+        $rootScope.user.role = data.role
+
+        setCookie("isLoggedIn",true,1)
+        setCookie("user",$rootScope.user,1)
+
         success(data)
       }
 
