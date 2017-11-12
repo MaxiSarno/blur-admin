@@ -10,6 +10,9 @@
 
   /** @ngInject */
   function SensoryEvaluationCtrl($http, $scope, samService, commonsService, toastr) {
+    //para la tabla de atributos
+    $scope.smartTablePageSize = 10;
+
     var vm = this;
 
     vm.samDetail = {}
@@ -42,6 +45,11 @@
 
     vm.getSamDesignCsv = function() {
       return samService.getDesignCsvUrl(vm.samDetail.samId, vm.samDesign.judges, vm.samDesign.samples)
+    }
+
+    vm.getSamAttributes = function() {
+      samService.getAttributes(vm.samDetail.samId, 
+        function(data){vm.attributesTableData=data})
     }
 
     vm.getSamAttributesTemplate = function() {
@@ -162,6 +170,7 @@
       vm.samDetail = { samId : samService.getCurrentSamId() }
       vm.getSamDetail()
       vm.getSamDesign()
+      vm.getSamAttributes()
       vm.getSamResult()
     }
 

@@ -624,6 +624,11 @@
       return evaluationUrl+'/'+samId+'/design/export?type=csv&judges='+judges+'&samples='+samples
     }
 
+    var getAttributes = function(samId, success, error) {
+      var getAttributesUrl = evaluationUrl+'/'+samId+'/attributes'
+      commonsService.http(getAttributesUrl, 'GET', success, error)
+    }
+
     var getAttributesCsvUrl = function(samId, attributes, success, error) {
       return evaluationUrl+'/'+samId+'/attributes/template?attributes='+attributes
     }
@@ -682,6 +687,7 @@
       getDesign  : getDesign,
       saveDesign  : saveDesign,
 
+      getAttributes : getAttributes,
       getAttributesCsvUrl : getAttributesCsvUrl,
 
       getResult : getResult,

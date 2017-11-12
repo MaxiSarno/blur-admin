@@ -16,7 +16,6 @@
                     </a>
                 </form>
             </div>
-
              
             <div class="col-md-6">
                 <form ng-submit="vm.attributesUpload()"  id="attributesUploadForm" method="POST" enctype="multipart/form-data" novalidate>
@@ -32,4 +31,8 @@
                 </form>
             </div>
         </div>
+
+        <hr>
+
+        <div include-with-scope="app/pages/sensory/widgets/samAttributesTable.html"></div>
 </ba-wizard-step>
