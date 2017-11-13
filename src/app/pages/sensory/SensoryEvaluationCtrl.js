@@ -49,7 +49,9 @@
 
     vm.getSamAttributes = function() {
       samService.getAttributes(vm.samDetail.samId, 
-        function(data){vm.attributesTableData=data})
+        function(data){
+          vm.attributesTableData=data
+        })
     }
 
     vm.getSamAttributesTemplate = function() {
@@ -166,14 +168,22 @@
       preventOpenDuplicates: false
     }
 
-    // initialize
-    if (0 < samService.getCurrentSamId()) {
-      vm.samDetail = { samId : samService.getCurrentSamId() }
-      vm.getSamDetail()
-      vm.getSamDesign()
-      vm.getSamAttributes()
-      vm.getSamResult()
+    // initialize// INIT
+    // por alguna razon, los datos se pisan si los cargo sin el timeout
+    vm.init = function() {
+      setTimeout(
+        function(){
+          if (0 < samService.getCurrentSamId()) {
+            vm.samDetail = { samId : samService.getCurrentSamId() }
+            vm.getSamDetail()
+            vm.getSamDesign()
+            vm.getSamAttributes()
+            vm.getSamResult()
+          }
+        }, 500);
     }
+
+    vm.init()
 
   }
 
