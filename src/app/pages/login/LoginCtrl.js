@@ -16,7 +16,7 @@
     vm.login = function() {
       var success = function(data) {
         console.log('login success:'+data)
-        $state.go('dashboard')
+        $state.go('sensory.list')
       }
 
       var error = function(data) {

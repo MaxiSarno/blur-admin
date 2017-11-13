@@ -73,10 +73,11 @@
       $http(req)
         .success(function(data) {
           vm.notify('success', 'Carga exitosa', 'documento cargado con éxito')
+          vm.getSamAttributes()
         })
         .error(function(data) {
           vm.notify('error', 'Error de carga', data)
-        });
+        })
     }
 
     vm.round = function(num, places) {
