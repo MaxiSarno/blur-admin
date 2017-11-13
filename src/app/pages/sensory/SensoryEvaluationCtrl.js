@@ -59,7 +59,7 @@
     }
 
     vm.attributesUpload = function() {
-      var uploadUrl = "http://localhost:8180/sam/evaluation/" + vm.samDetail.samId + "/attributes/fileupload"
+      var uploadUrl = "http://localhost:8180/evaluation/" + vm.samDetail.samId + "/attributes/fileupload"
       
       var formData = new FormData();
       formData.append("file",file.files[0]);
@@ -142,6 +142,11 @@
     }
 
     vm.calcSamResult = function() {
+      if (vm.samResult.alpha <= 0 || vm.samResult.alpha >= 1) {
+        vm.notify('error', 'Alfa erroneo', 'debe ser un valor probabilistico entre 0 y 1')
+        return
+      }
+
       return samService.calcResult(vm.samDetail.samId, vm.samResult.alpha, 
         vm.processResult,
         function(data){console.log('Error en vm.calcSamResult samId:'+vm.samDetail.samId)})

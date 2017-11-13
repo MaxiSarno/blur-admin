@@ -100,7 +100,7 @@
   /** @ngInject */
   function commonsService($http, $rootScope, Base64) {
 
-    var loginUrl = 'http://localhost:8180/sam/login'
+    var loginUrl = 'http://localhost:8180/login'
     var thiz = this
 
     var http = function(url, method, success, error) {
@@ -260,8 +260,8 @@
 
   function samService($sce, $http, Base64, commonsService, $rootScope) {
 
-    var evaluationUrl = 'http://localhost:8180/sam/evaluation'
-    var userUrl = 'http://localhost:8180/sam/user'
+    var evaluationUrl = 'http://localhost:8180/evaluation'
+    var userUrl = 'http://localhost:8180/user'
     var currentSamId = 0
 
     var mock = false
