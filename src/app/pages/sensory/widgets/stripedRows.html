@@ -1,0 +1,26 @@
+<div class="vertical-scroll">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="table-id">Muestra</th>
+      <th>Promedio</th>
+      <th>Varianza</th>
+      <th>Cant</th>
+      <th>Suma</th>
+      <th>Min</th>
+      <th>Max</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="summary in partial.summaries" >
+      <td>{{summary.sampleName}}</td>
+      <td>{{summary.average}}</td>
+      <td>{{summary.variance}}</td>
+      <td>{{summary.count}}</td>
+      <td>{{summary.sum}}</a></td>
+      <td>{{summary.min}}</td>
+      <td>{{summary.max}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
