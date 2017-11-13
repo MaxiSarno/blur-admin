@@ -10,11 +10,11 @@
     
     'BlurAdmin.pages.sensory', 
     'BlurAdmin.pages.users', 
-    'BlurAdmin.pages.login', 
-
+    'BlurAdmin.pages.login'
+/*
     'BlurAdmin.pages.dashboard',
     'BlurAdmin.pages.profile'
-/*    'BlurAdmin.pages.ui',
+    'BlurAdmin.pages.ui',
     'BlurAdmin.pages.components',
     'BlurAdmin.pages.form',
     'BlurAdmin.pages.tables',
@@ -42,7 +42,7 @@
         }
     });*/
 
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/sensory/list');
   }
 
 })();
