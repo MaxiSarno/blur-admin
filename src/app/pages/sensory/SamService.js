@@ -129,6 +129,33 @@
         })
     }
 
+    var httpBody = function(url, method, data, success, error) {
+
+      if (!$http.defaults.headers.common.Authorization) {
+        $http.defaults.headers.common.Authorization = getCookie('authorization')
+      }
+
+      var req = {
+        method: method,
+        url: url,
+        dataType: 'json',
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true,
+        useXDomain: true,
+        body: JSON.stringify(data)
+      }
+
+      $http(req)
+        .success(function(data) {
+          success(data)
+        })
+        .error(function(data) {
+          if (error) {
+            error(data)
+          }
+        })
+    }
+
     // LOG IN
 
     var login = function(user, success, error) {
@@ -246,6 +273,7 @@
 
     return {
       http : http,
+      httpBody : httpBody,
 
       login : login,
       logout : logout,
@@ -629,6 +657,11 @@
       commonsService.http(getAttributesUrl, 'GET', success, error)
     }
 
+    var saveAttributes = function(samId, attributes, success, error) {
+      var saveAttributesUrl = evaluationUrl+'/'+samId+'/attributes'
+      commonsService.httpBody(saveAttributesUrl, 'POST', attributes, success, error)
+    }
+
     var getAttributesCsvUrl = function(samId, attributes, success, error) {
       return evaluationUrl+'/'+samId+'/attributes/template?attributes='+attributes
     }
@@ -688,6 +721,7 @@
       saveDesign  : saveDesign,
 
       getAttributes : getAttributes,
+      saveAttributes : saveAttributes,
       getAttributesCsvUrl : getAttributesCsvUrl,
 
       getResult : getResult,

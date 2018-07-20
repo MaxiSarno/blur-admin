@@ -1,0 +1,45 @@
+<div class="horizontal-scroll">
+  <a target="_blank" ng-click="vm.preloadAttributes()">
+    <button ng-disabled="!vm.samAttributes.names" type="button" class="btn btn-success btn-with-icon">
+      <i class="ion-android-create"></i>
+      Completar online
+    </button> 
+  </a>
+  <a target="_blank" ng-click="vm.saveAttributes()">
+    <button ng-disabled="!vm.samAttributes.names" type="button" class="btn btn-success btn-with-icon">
+      <i class="ion-android-checkbox"></i>
+      Guardar
+    </button> 
+  </a>
+  <table class="table" st-table="vm.attributesTableData">
+    <thead>
+    <tr class="sortable ">
+      <th st-sort="judge" st-sort-default="true">Panelista</th>
+      <th st-sort="product">Producto</th>
+      <th st-sort="attribute">Atributo</th>
+      <th st-sort="value">Valor</th>
+    </tr>
+    <tr>
+      <th><input st-search="judge" placeholder="Buscar por Panelista" class="input-sm form-control search-input" type="search"/></th>
+      <th><input st-search="product" placeholder="Buscar por Producto" class="input-sm form-control search-input" type="search"/></th>
+      <th><input st-search="attribute" placeholder="Buscar por Atributo" class="input-sm form-control search-input" type="search"/></th>
+      <th><input st-search="value" placeholder="Buscar por Valor" class="input-sm form-control search-input" type="search"/></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in vm.attributesTableData">
+      <td>{{item.judge}}</td>
+      <td>{{item.product}}</td>
+      <td>{{item.attribute}}</td>
+      <td><span editable-text="item.value" blur="cancel">{{item.value}}</span></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6" class="text-center">
+        <div st-pagination="" st-items-by-page="smartTablePageSize" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

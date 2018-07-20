@@ -54,6 +54,38 @@
         })
     }
 
+    vm.preloadAttributes = function() {
+      if(!vm.samAttributes.names) {
+        return
+      }
+
+      var data = []
+      var sheetAttributes = vm.samAttributes.names.split(',')
+      var sheetProducts = vm.samDesign.samples.split(',')
+
+      for (var i =  1; i <= vm.samDesign.judges; i++) {
+        for (var j = 0; j < sheetAttributes.length; j++) {
+          for (var k = 0; k < sheetProducts.length; k++) {
+            var sheet = {
+              "samId": vm.samDetail.samId,
+              "product": sheetProducts[k],
+              "attribute": sheetAttributes[j],
+              "value": 0
+            }
+            data.push(sheet)
+          }
+        }        
+      }
+
+      vm.attributesTableData = data
+    }
+
+    vm.saveAttributes = function() {
+      samService.saveAttributes(vm.samDetail.samId, vm.attributesTableData, 
+        function(data) {vm.samDetail.samId = data.data}, 
+        function(data){console.log('Error en vm.getSamAttributesSave samId:'+vm.samDetail.samId)})
+    }
+
     vm.getSamAttributesTemplate = function() {
       return samService.getAttributesCsvUrl(vm.samDetail.samId, vm.samAttributes.names)
     }
