@@ -68,9 +68,10 @@
           for (var k = 0; k < sheetProducts.length; k++) {
             var sheet = {
               "samId": vm.samDetail.samId,
+              "judge" : i,
               "product": sheetProducts[k],
               "attribute": sheetAttributes[j],
-              "value": 0
+              "value": Math.floor(Math.random() * 5) + 1  
             }
             data.push(sheet)
           }

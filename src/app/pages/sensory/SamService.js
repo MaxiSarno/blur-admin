@@ -134,6 +134,7 @@
       if (!$http.defaults.headers.common.Authorization) {
         $http.defaults.headers.common.Authorization = getCookie('authorization')
       }
+      console.log("data:"+data)
 
       var req = {
         method: method,
@@ -142,7 +143,7 @@
         headers: {'Content-Type': 'application/json'},
         withCredentials: true,
         useXDomain: true,
-        body: JSON.stringify(data)
+        data: JSON.stringify(data)
       }
 
       $http(req)
